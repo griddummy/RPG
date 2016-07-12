@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b998da75d1e6214fa11bcaf31d46fde, type: 3}
+  m_Name: ItemDatabase
+  m_EditorClassIdentifier: 
+  itemList:
+  - itemName: LadderArmor
+    itemID: 0
+    itemIcon: {fileID: 21300000, guid: fcd8bd2db18e92d42a7d14fc0e395888, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 6
+    maxStack: 1
+    itemAttributes:
+    - attributeName: Armor
+      attributeValue: 10
+  - itemName: GoldenArmor
+    itemID: 1
+    itemIcon: {fileID: 21300000, guid: 22012799e7b2d3f41b2c05e0c71541f6, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 6
+    maxStack: 1
+    itemAttributes:
+    - attributeName: Armor
+      attributeValue: 20
+  - itemName: LadderShoes
+    itemID: 2
+    itemIcon: {fileID: 21300000, guid: 3677eacbc4390644e97df27f50b96587, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 5
+    maxStack: 1
+    itemAttributes:
+    - attributeName: Armor
+      attributeValue: 5
+  - itemName: MagicShoes
+    itemID: 3
+    itemIcon: {fileID: 21300000, guid: 7fa8a83e60d4f5046abdbb50bcb40d4a, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 5
+    maxStack: 1
+    itemAttributes:
+    - attributeName: Armor
+      attributeValue: 10
+  - itemName: Necklace
+    itemID: 4
+    itemIcon: {fileID: 21300000, guid: 4ca4da0f88df7c64cba9c1934d6930cc, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 8
+    maxStack: 1
+    itemAttributes:
+    - attributeName: Armor
+      attributeValue: 5
+  - itemName: LadderHelmet
+    itemID: 5
+    itemIcon: {fileID: 21300000, guid: 63dca6d4e4e873a4cb09997656d54082, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 4
+    maxStack: 1
+    itemAttributes:
+    - attributeName: armor
+      attributeValue: 5
+  - itemName: SilverHelmet
+    itemID: 6
+    itemIcon: {fileID: 21300000, guid: 98f5e61dc86e9814d8c8d9e8e54ac417, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 4
+    maxStack: 1
+    itemAttributes:
+    - attributeName: armor
+      attributeValue: 10
+  - itemName: Hamburger
+    itemID: 7
+    itemIcon: {fileID: 21300000, guid: bad82843ddb69514c9b6b8e381d175f3, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 2
+    maxStack: 5
+    itemAttributes:
+    - attributeName: Health
+      attributeValue: 10
+  - itemName: HealthPotion
+    itemID: 8
+    itemIcon: {fileID: 21300000, guid: 3ac254c0fa6214047a1df59938ba786f, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 2
+    maxStack: 5
+    itemAttributes:
+    - attributeName: Health
+      attributeValue: 20
+  - itemName: ManaPotion
+    itemID: 9
+    itemIcon: {fileID: 21300000, guid: f1de9e836c79fde4aab8a740ec51eb32, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 2
+    maxStack: 5
+    itemAttributes:
+    - attributeName: Mana
+      attributeValue: 20
+  - itemName: Apple
+    itemID: 10
+    itemIcon: {fileID: 21300000, guid: a4d3f378d1a88f346af15ee906321f2a, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 2
+    maxStack: 5
+    itemAttributes:
+    - attributeName: Health
+      attributeValue: 0
+  - itemName: Bread
+    itemID: 11
+    itemIcon: {fileID: 21300000, guid: 0288dbaa9a46b7a4fa8f0b0b773b6024, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 2
+    maxStack: 5
+    itemAttributes:
+    - attributeName: Health
+      attributeValue: 5
+    - attributeName: Mana
+      attributeValue: 5
+  - itemName: Meat
+    itemID: 12
+    itemIcon: {fileID: 21300000, guid: b29cbbd10ecf3fd40991d4734d556c17, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 2
+    maxStack: 5
+    itemAttributes:
+    - attributeName: Health
+      attributeValue: 10
+    - attributeName: Mana
+      attributeValue: 10
+  - itemName: Sword
+    itemID: 13
+    itemIcon: {fileID: 21300000, guid: cacfe13c2f50e744385457d62f19924c, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 1
+    maxStack: 1
+    itemAttributes:
+    - attributeName: Damage
+      attributeValue: 10
+  - itemName: Axe
+    itemID: 14
+    itemIcon: {fileID: 21300000, guid: ac540eca270aa13418f2752bd0ebfb3f, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 1
+    maxStack: 1
+    itemAttributes:
+    - attributeName: Damage
+      attributeValue: 15
+  - itemName: Dagger
+    itemID: 15
+    itemIcon: {fileID: 21300000, guid: 4a08a7ec00ba3624c9612502b9778be3, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 1
+    maxStack: 1
+    itemAttributes:
+    - attributeName: Damage
+      attributeValue: 5
+  - itemName: Mace
+    itemID: 16
+    itemIcon: {fileID: 21300000, guid: 00cbbcf25b1a8fb4ba3ba6934d9837cd, type: 3}
+    itemModel: {fileID: 160542, guid: fd09402a3480c5f4ea56c9c9b2c619a0, type: 2}
+    itemValue: 1
+    itemType: 1
+    maxStack: 1
+    itemAttributes:
+    - attributeName: Damage
+      attributeValue: 13

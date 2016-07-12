@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     public delegate void OnChangedHpEvent(int Hp, int MaxHp);
     public event OnChangedHpEvent OnChangedHP;
@@ -15,6 +16,9 @@ public class Player : MonoBehaviour {
     public delegate void OnChangedLevelEvent(int level);
     public event OnChangedLevelEvent OnChangedLevel;
 
+    public delegate void OnDeathEvent();
+    public event OnDeathEvent OnDeath;
+
     private int m_Hp;                 // 현재 HP
     private int m_HpMaxBuff;          // Buff HP (장비로 인한 추가 HP)
     private int m_HpRegenerateBuff;   // 분당 회복력 버프
@@ -24,7 +28,7 @@ public class Player : MonoBehaviour {
     private int m_SpRegenerateBuff;   // 분당 회복력 버프
 
     private int m_AttackPowerBuff;    // 공격력 버프
-     
+
     private int m_Level = 1;          // 현재 레벨 , 기본값 1
     private int m_Experience;         // 현재 경험치
 
@@ -42,8 +46,6 @@ public class Player : MonoBehaviour {
 
     public Collider boxCol;                     //BoxCollider 
     public GameObject Smoke;                    //이동시 먼지흩날리는효과
-    public GameObject Skill1;                   //스킬이펙트
-    public GameObject Skill2;                   //스킬이펙트2
     public Transform transformWeapon;
 
     private CharacterController controller;     //캐릭터 컨트롤러
@@ -58,7 +60,7 @@ public class Player : MonoBehaviour {
     private float xx;
     private float zz;
 
-    private int curWeaponDamage;
+    public int curWeaponDamage;
 
     //layer.state를 hash로 변수정의
     static int idleState = Animator.StringToHash("Base Layer.Idle");
@@ -92,10 +94,15 @@ public class Player : MonoBehaviour {
             m_Hp = value;
             if (preHp != m_Hp)
             {
-                if(OnChangedHP != null)
+                if (OnChangedHP != null)
                     OnChangedHP(hp, hpMax);
+                if(m_Hp <= 0)
+                {
+                    anim.SetBool("Dead", true);
+                    if (OnDeath != null)
+                        OnDeath();
+                }
             }
-                
         }
     }
 
@@ -117,9 +124,9 @@ public class Player : MonoBehaviour {
         {
             int preHpMaxBuff = m_HpMaxBuff;
             m_HpMaxBuff = value;
-            if(preHpMaxBuff != m_HpMaxBuff)
+            if (preHpMaxBuff != m_HpMaxBuff)
             {
-                if(OnChangedHP != null)
+                if (OnChangedHP != null)
                     OnChangedHP(hp, hpMax);
             }
         }
@@ -132,7 +139,7 @@ public class Player : MonoBehaviour {
             return getLevelInfo().hpRegenerate + m_HpRegenerateBuff;
         }
     }
-    
+
     public int hpRegenerateBuff  // 아이템으로 인한 HP 분당 회복량을 제어 get, set
     {
         get
@@ -156,11 +163,11 @@ public class Player : MonoBehaviour {
             if (value < 0)
             {
                 value = 0;
-            }                
+            }
             else if (value > spMax)
             {
                 value = spMax;
-            }                
+            }
             int preSp = m_Sp;
             m_Sp = value;
             if (preSp != m_Sp)
@@ -168,7 +175,7 @@ public class Player : MonoBehaviour {
                 if (OnChangedSP != null)
                     OnChangedSP(m_Sp, spMax);
             }
-                
+
         }
     }
 
@@ -192,10 +199,10 @@ public class Player : MonoBehaviour {
             m_SpMaxBuff = value;
             if (preSpMaxBuff != m_SpMaxBuff)
             {
-                if(OnChangedSP != null)
+                if (OnChangedSP != null)
                     OnChangedSP(m_Sp, spMax);
             }
-                
+
         }
     }
 
@@ -261,11 +268,11 @@ public class Player : MonoBehaviour {
             int preLevel = m_Level;
             m_Level = value;
             changedLevel();
-            if(preLevel != m_Level)
+            if (preLevel != m_Level)
             {
-                if(OnChangedLevel != null)
+                if (OnChangedLevel != null)
                     OnChangedLevel(m_Level);
-            }                
+            }
         }
     }
 
@@ -280,13 +287,13 @@ public class Player : MonoBehaviour {
             if (level >= m_Job.maxLevel)
             {
                 value = 0;
-            }                
-            int preExp = m_Experience;         
+            }
+            int preExp = m_Experience;
             m_Experience = value;
             calculateExp();
-            if(preExp != m_Experience)
+            if (preExp != m_Experience)
             {
-                if(OnChangedExp!= null)
+                if (OnChangedExp != null)
                 {
                     OnChangedExp(m_Experience, expRequired);
                 }
@@ -321,20 +328,20 @@ public class Player : MonoBehaviour {
     void Update()
     {
         StateCheck();
-        keyBoardInput();
+        if(currentBaseState.fullPathHash != deadState)
+            keyBoardInput();        
         LookUpdate();
-
         currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
     }
 
     private Stat getLevelInfo()
-    {       
+    {
         return m_Job.getStatInfo(m_Level);
-    }       
+    }
 
     public void LevelUp() // 레벨업
     {
-        if(level >= m_Job.maxLevel)
+        if (level >= m_Job.maxLevel)
         {
             exp = 0;
         }
@@ -345,7 +352,7 @@ public class Player : MonoBehaviour {
 
     }
     private void changedLevel()
-    {        
+    {
         // 현재 Hp, Sp 회복
         hp = hpMax;
         sp = spMax;
@@ -390,7 +397,7 @@ public class Player : MonoBehaviour {
         //c키를 받을 때 스킬사용
         if (Input.GetKeyDown(KeyCode.C))
         {
-            if(sp >= m_curSkill.requiredSp)
+            if (sp >= m_curSkill.requiredSp)
             {
                 sp -= m_curSkill.requiredSp;
                 // 스킬 애니메이션 결정                  
@@ -447,24 +454,24 @@ public class Player : MonoBehaviour {
         if (currentBaseState.fullPathHash == idleState)
         {
             anim.SetBool("Run", false);
-            anim.SetBool("Damage", false);
             anim.SetBool("Dead", false);
-            anim.SetBool("JumpAttack", false);
+            anim.SetBool("JumpAttack", false);            
+            //anim.ResetTrigger("Damage");
             anim.ResetTrigger("Skill1");
             anim.ResetTrigger("Jump");
             anim.ResetTrigger("Combo1");
             anim.ResetTrigger("Combo2");
             anim.ResetTrigger("Combo3");
             boxCol.enabled = false;
-            curWeaponDamage = 0;            
+            curWeaponDamage = 0;
         }
         //죽었을때 전부초기화
         if (currentBaseState.fullPathHash == deadState)
         {
             anim.SetBool("Run", false);
-            anim.SetBool("Damage", false);
             anim.SetBool("Dead", false);
             anim.SetBool("JumpAttack", false);
+            anim.ResetTrigger("Damage");
             anim.ResetTrigger("Skill1");
             anim.ResetTrigger("Jump");
             anim.ResetTrigger("Combo1");
@@ -525,7 +532,6 @@ public class Player : MonoBehaviour {
         {
             curWeaponDamage = m_curSkill.getSkillDamage(attackPower);
             boxCol.enabled = true;
-            Debug.Log("Skill1");
         }
 
         //스킬2(add effect)
@@ -548,6 +554,11 @@ public class Player : MonoBehaviour {
             curWeaponDamage = attackPower;
             boxCol.enabled = true;
         }
+
+        if (currentBaseState.fullPathHash == damageState)
+        {
+            anim.SetBool("Idle", true);
+        }
     }
 
     //invoke사용을 위한 메서드
@@ -556,41 +567,38 @@ public class Player : MonoBehaviour {
         boxCol.enabled = false;
     }
 
-    
+
     // 플레이어 몸체의 충돌
     void OnTriggerEnter(Collider col)
     {
         //죽음
         if (hp <= 0)
         {
-            anim.SetBool("Dead", true);  
+            anim.SetBool("Dead", true);
         }
 
         //피격시
-        if (col.gameObject.tag == "Bullet")
-        {            
+        if (col.gameObject.tag == "Bullet" || col.gameObject.tag == "bullet")
+        {
             hp -= 0; // monsterWeapon
-            anim.SetBool("Damage", true);
+            anim.SetTrigger("Damage");
         }
     }
 
     // weapon의 충돌체에서 호출됨
-    public void Hit(MonsterManager monster)
+    public void HitToPlayer(int damage)
     {
-        Debug.Log("Hit Monster");
-        // 몬스터의 피를 깍는다
-        monster.MonsterCurrentHP -= curWeaponDamage;
-
-        // 충돌 이펙트를 출력한다?
-
-
+        hp -= damage;
+        anim.SetBool("Idle", false);
+        anim.SetTrigger("Damage");
     }
+
     IEnumerator Regen()
     {
         while (true)
         {
             yield return new WaitForSeconds(5f);
-            if(hp > 0)
+            if (hp > 0)
             {
                 hp += hpRegenerate;
                 sp += spRegenerate;
@@ -598,3 +606,4 @@ public class Player : MonoBehaviour {
         }
     }
 }
+

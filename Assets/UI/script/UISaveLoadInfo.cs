@@ -34,14 +34,7 @@ public class UISaveLoadInfo : MonoBehaviour {
         btnRemove.gameObject.SetActive(false);
         PopupClose();
 
-        // 스크롤 초기화
-        foreach (GameObject objBtn in listBtnSaveInfo)
-        {
-            Destroy(objBtn);
-        }            
-
-        listBtnSaveInfo.Clear();
-        listSaveInfo.Clear();
+        
 
         setCurrentPlayinfo(); // 현재 플레이어 정보 표시
 
@@ -50,6 +43,14 @@ public class UISaveLoadInfo : MonoBehaviour {
     }
     private void InitScrollViewItem()
     {
+        // 스크롤 초기화
+        foreach (GameObject objBtn in listBtnSaveInfo)
+        {
+            Destroy(objBtn);
+        }
+
+        listBtnSaveInfo.Clear();
+        listSaveInfo.Clear();
         // 모든 저장정보 불러오기
         listSaveInfo = GameManager.instance.getAllSaveInfo();
 

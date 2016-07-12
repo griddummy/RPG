@@ -65,7 +65,7 @@ public class NewFirePattern : MonoBehaviour {
 					yield return new WaitForSeconds (1 / fps1);
 
 	
-					FirePointTransform.rotation = Quaternion.Euler (0, Random.Range (-FireRadicalAngle/2, FireRadicalAngle/2), 0);
+					FirePointTransform.rotation = Quaternion.Euler (0, -180 +Random.Range (-FireRadicalAngle/2, FireRadicalAngle/2), 0);
 
 					StartTime += Time.deltaTime;
 					if (StartTime > HowLongShootTime) {

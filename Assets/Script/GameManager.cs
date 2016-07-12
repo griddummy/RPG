@@ -20,13 +20,15 @@ public class GameManager : MonoBehaviour {
     private Stage curStage; // 현재 Stage
     private Job.JOB jobNewSelected = Job.JOB.WARRIOR;// 선택한 직업
     private GameObject objPlayer;   // 생성한 플레이어 오브젝트
+    private Player player;          // 플레이어 클래스
     private GameObject objUIBar;    // 생성한 Bar UI;
     private float fadeTime = 0.5f;
     private List<SaveInfo> listSaveInfo;
     private const string SAVE_PATH = "/Save/";
     private const string SAVE_EXTENTION = ".sav";
     private GameObject objUISaveLoad;
-
+    private PlayerInventory playerInven;
+    private ItemDataBaseList listItemDataBase;
     private static GameManager m_instance;
     public static GameManager instance
     {
@@ -50,13 +52,18 @@ public class GameManager : MonoBehaviour {
     }
 
     void Awake()
-    {      
-        DontDestroyOnLoad(gameObject); // 삭제하지 않음
+    {
+        
+        if (FindObjectsOfType<GameManager>().Length >= 2)
+            Destroy(gameObject);
+        else
+            DontDestroyOnLoad(gameObject); // 삭제하지 않음
     }
 
     void Start()
     {
         curStage = listStage[0];
+        listItemDataBase = (ItemDataBaseList)Resources.Load("ItemDatabase");
     }
 
     public Stage getCurrentStageInfo()
@@ -71,6 +78,8 @@ public class GameManager : MonoBehaviour {
     {
         GameObject prefab = getCurrentJobInfo().jopPrefab;
         objPlayer = Instantiate(prefab);
+        player = objPlayer.GetComponent<Player>();
+        player.OnDeath += EndGame;
         DontDestroyOnLoad(objPlayer);
     }
     public void MoveStage(int indexStage, Vector3 vecStartPos)
@@ -92,12 +101,17 @@ public class GameManager : MonoBehaviour {
     }
     public Player getPlayerInfo()
     {
-        return objPlayer.GetComponent<Player>();
+        return player;
+    }
+    public PlayerInventory getPlayerInventory()
+    {
+        return playerInven;
     }
     public void StartNewGame(int indexStage) // 새 게임 시작
     {
         StartNewGame(0, null);
     }
+    
     public void StartNewGame(int indexStage, SaveInfo info)
     {
         // 기존 플레이어 삭제
@@ -108,30 +122,63 @@ public class GameManager : MonoBehaviour {
         }
         // 새 플레이어 오브젝트 생성
         CreateNewPlayer();
-        // 새 UI Bar 생성
-        CreateNewUIBar();
+        
 
-        // 플레이어 정보 로드
-        if (info != null)
+        // 새 UI Bar 생성
+        CreateNewUIPlayer();
+        
+        
+        
+        if (info != null) // 세이브 정보가 있으면
         {
-            Player player = objPlayer.GetComponent<Player>();
+            // 플레이어 정보 로드
             player.level = info.level;
             player.sp = info.curSP;
             player.hp = info.curHP;
             player.exp = info.curExp;
+
+            // 아이템 로드            
+            List<Item> listItem = new List<Item>();
+            foreach (SaveItemInfo sItemInfo in info.listInventoryItem)
+            {
+                listItem.Add(sItemInfo.getItem(listItemDataBase));                
+            }            
+            playerInven.InitInventoryItems(listItem);
+            listItem.Clear();
+            foreach (SaveItemInfo sItemInfo in info.listHotBarItem)
+            {
+                listItem.Add(sItemInfo.getItem(listItemDataBase));
+                
+            }
+            playerInven.InitHotbarItems(listItem);
+            listItem.Clear();
+            foreach (SaveItemInfo sItemInfo in info.listStorageItem)
+            {
+                listItem.Add(sItemInfo.getItem(listItemDataBase));
+            }
+
+            playerInven.InitStorageItems(listItem);
+            listItem.Clear();
+            foreach (SaveItemInfo sItemInfo in info.listCharacterSystemItem)
+            {
+                listItem.Add(sItemInfo.getItem(listItemDataBase));
+            }
+            playerInven.InitCharSystemItems(listItem);
             MoveStage(indexStage, new Vector3(info.posX, info.posY, info.posZ));
         }
         else
             MoveStage(indexStage, listStage[indexStage].transDefaultStartingPos.position);
     }
-    private void CreateNewUIBar()
+    private void CreateNewUIPlayer()
     {
         if (objPlayer == null)
             return;
+
         if(objUIBar != null)
         {
             Destroy(objUIBar);
         }
+
         objUIBar = Instantiate(prefabUIBar);
         objUIBar.SetActive(false);
         DontDestroyOnLoad(objUIBar);
@@ -146,6 +193,30 @@ public class GameManager : MonoBehaviour {
         bar.HpBar.SetupValue(player.hp, player.hpMax);
         bar.SpBar.SetupValue(player.sp, player.spMax);
         bar.ExpBar.SetupValue(player.exp, player.expRequired);
+        playerInven = objUIBar.GetComponent<PlayerInventory>();
+    }
+    
+    public void EndGame()
+    {
+        // 플레이어가 죽으면 실행
+
+        // 메인메뉴로 5초 후 이동
+        StartCoroutine(GoMainMenu());
+
+    }
+    IEnumerator GoMainMenu()
+    {
+        yield return new WaitForSeconds(5f);
+        MoveMainMenu();
+    }
+    public void MoveMainMenu()
+    {        
+        if(objPlayer != null)
+            Destroy(objPlayer);
+        if(objUIBar != null)
+            Destroy(objUIBar);
+        SceneManager.LoadScene("SceneMain");
+        
     }
     public void ExitGame() // 게임 종료
     {
@@ -213,7 +284,9 @@ public class GameManager : MonoBehaviour {
         string strTime = time.Hour.ToString() + "시 " + time.Minute.ToString() + "분 " + time.Second.ToString() + "초";
         string saveName = strDate + " " + strTime;
 
-        info.setInfo(saveName, playerInfo.hp, playerInfo.sp, playerInfo.exp, playerInfo.level, jobNewSelected, getCurrentStageInfo().stageName, getCurrentStageInfo().sceneName, playerInfo.transform.position, strDate, strTime);
+        info.setInfo(saveName, playerInfo.hp, playerInfo.sp, playerInfo.exp, playerInfo.level, jobNewSelected,
+            getCurrentStageInfo().stageName, getCurrentStageInfo().sceneName, playerInfo.transform.position, strDate, strTime,
+             playerInven.GetInventoryItems(), playerInven.GetStorageInventoryItems(), playerInven.GetHotBarItems(), playerInven.GetCharacterSystemInventoryItems());
 
         return info;
     }
@@ -222,7 +295,8 @@ public class GameManager : MonoBehaviour {
         listSaveInfo = new List<SaveInfo>();
 
         DirectoryInfo d = new DirectoryInfo(Application.persistentDataPath + SAVE_PATH);
-
+        if (d == null)
+            return listSaveInfo;
         FileInfo[] fileInfos = d.GetFiles();
 
         foreach(FileInfo file in fileInfos)
@@ -315,4 +389,42 @@ public class GameManager : MonoBehaviour {
         index = -1;
         return false;
     }
+    void Update()
+    {
+        //Test
+        if(Input.GetKeyDown(KeyCode.Keypad0))
+        {
+            playerInven.inventory.GetComponent<Inventory>().setRandomItemTest();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(SceneManager.GetActiveScene().name != "SceneMain")
+            {
+                if (curStage.type == Stage.TYPE.NORMAL)
+                {
+                    if (isOpenUISaveLoad())
+                    {
+                        CloseUISaveLoad();
+                    }
+                    else
+                    {
+                        OpenUISaveLoad(UISaveLoadInfo.MODE.SAVELOAD, null);
+                    }
+                }                
+            }
+        }
+    }
+    public Item GetRandomItem()
+    {
+        ItemDataBaseList itemDatabase = (ItemDataBaseList)Resources.Load("ItemDatabase");
+        int randomItemNumber = Random.Range(0, itemDatabase.itemList.Count - 1);
+
+        Item item = itemDatabase.itemList[randomItemNumber].getCopy();
+
+        int randomValue = Random.Range(1, itemDatabase.itemList[randomItemNumber].getCopy().maxStack);
+        item.itemValue = randomValue;
+        return item;
+    }
+    
 }

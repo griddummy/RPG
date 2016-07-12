@@ -50,7 +50,7 @@ MonoBehaviour:
       type: 2}
   - type: 1
     stageName: "\uCD08\uBCF4\uBCF4\uC2A4\uC874"
-    sceneName: SceneStage1_Boss2
+    sceneName: SceneStage1_Boss0
     transDefaultStartingPos: {fileID: 481252, guid: 3e408e5cf87c3e944af4d29b882b4482,
       type: 2}
   - type: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
     maxLevel: 20
     BaserequiredExp: 100
     ExpRateofIncrease: 1.1
-    BaseHp: 100
+    BaseHp: 2000
     AddHp: 5
     BaseSp: 100
     AddSp: 5
@@ -102,7 +102,7 @@ MonoBehaviour:
     AddAp: 2
     BaseHpRegen: 1
     BaseHpRegenInteval: 1
-    BaseSpRegen: 1
+    BaseSpRegen: 10
     BaseSpRegenInteval: 1
 --- !u!1001 &100100000
 Prefab:

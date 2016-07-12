@@ -4,13 +4,7 @@ using System.Collections.Generic;
 
 [System.Serializable]
 public class SaveInfo {
-
-    [System.Serializable]
-    public struct PlayerItemInfo
-    {
-        // 인벤토리 아이템 정보
-    } 
-
+        
     public string saveName;     // 저장 이름
     
     public int curHP;           // HP
@@ -25,11 +19,22 @@ public class SaveInfo {
     public float posZ;          // 위치
     public string date;         // 날짜 // System.DateTime.Now.ToString("yyyy/MM/dd");
     public string time;         // 시간 // System.DateTime.Now.ToString("hh:mm:ss"); 
-    
 
-    //public List<PlayerItemInfo> listPlayerItemInfo; // 인벤토리 아이템 정보
+    [SerializeField]
+    public List<SaveItemInfo> listInventoryItem = new List<SaveItemInfo>(); // 인벤토리 아이템
 
-    public void setInfo(string saveName, int Hp, int Sp, int Exp, int level, Job.JOB job, string stageName, string stageSceneName, Vector3 pos, string date, string time)
+    [SerializeField]
+    public List<SaveItemInfo> listStorageItem = new List<SaveItemInfo>(); // 창고 아이템
+
+    [SerializeField]
+    public List<SaveItemInfo> listHotBarItem = new List<SaveItemInfo>(); // 슬롯 아이템
+
+    [SerializeField]
+    public List<SaveItemInfo> listCharacterSystemItem = new List<SaveItemInfo>(); // 장착한 아이템
+
+    public void setInfo(string saveName, int Hp, int Sp, int Exp, int level, Job.JOB job,
+        string stageName, string stageSceneName, Vector3 pos, string date, string time,
+        List<Item> listInven, List<Item> listStorage, List<Item> listHorBar, List<Item> listCharSys )
     {
         this.saveName = saveName;
         curHP = Hp;
@@ -44,5 +49,22 @@ public class SaveInfo {
         posZ = pos.z;
         this.date = date;
         this.time = time;
+        setSaveItemInfoFromItemList(listInventoryItem, listInven);
+        setSaveItemInfoFromItemList(listStorageItem, listStorage);
+        setSaveItemInfoFromItemList(listHotBarItem, listHorBar);
+        setSaveItemInfoFromItemList(listCharacterSystemItem, listCharSys);
     }
+    private void setSaveItemInfoFromItemList(List<SaveItemInfo> listSaveItemInfo, List<Item> listItem)
+    {
+        if (listItem == null)
+            return;
+        listSaveItemInfo.Clear();
+        foreach (Item item in listItem)
+        {
+            SaveItemInfo iteminfo = new SaveItemInfo();
+            iteminfo.itemID = item.itemID;
+            iteminfo.itemValue = item.itemValue;
+            listSaveItemInfo.Add(iteminfo);
+        }
+    }    
 }

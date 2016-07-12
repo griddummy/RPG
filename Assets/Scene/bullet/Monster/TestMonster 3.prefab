@@ -1889,12 +1889,11 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159228}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abfab764de01e8b4cb74eabf4308c025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!114 &11481646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1906,18 +1905,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba68c908353d02140aa8c346e0ef0de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  col: {fileID: 6504764}
+  colWeapon: {fileID: 6504764}
   Dir: {x: 0, y: 0, z: 0}
   LookDistan: 15
   effect: {fileID: 100004, guid: a89abc0d2591545288f4c041059ae633, type: 2}
   random: 35
   MonsterMaxHP: 70
   MonsterCurrentHP: 70
-  DropItem: {fileID: 192170, guid: 57ea84e04191d4d459d268ca7fc5bac8, type: 2}
-  KillExp: 400
+  KillExp: 1000
   AttackPower: 9
   AttackColltime: 0.3
   isChase: 0
+  bullet: {fileID: 167838, guid: 1fbb4a0d900aa7441b85fea9190ade7a, type: 2}
+  fps: 10
+  attackRange: 30
+  Far: 0
 --- !u!137 &13701224
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

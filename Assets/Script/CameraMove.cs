@@ -10,7 +10,8 @@ public class CameraMove : MonoBehaviour {
         tr = GameObject.FindWithTag("Player").transform;
     }
 	void LateUpdate () {
-		transform.position = tr.position;
+        if(tr != null)
+		    transform.position = tr.position;
 	}
 }
 

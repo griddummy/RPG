@@ -1681,8 +1681,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111588}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1, y: -0, z: -24.3}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
+  m_LocalPosition: {x: 0.5674586, y: 0, z: -18.148338}
   m_LocalScale: {x: 30, y: 30, z: 30}
   m_Children:
   - {fileID: 470522}
@@ -1835,26 +1835,72 @@ MonoBehaviour:
   BossHPPercent: 0
   listPattern:
   - listObjPattern:
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 177268, guid: 92368a8d2c5a9aa428a44ccf3ed2e2bb, type: 2}
     waitTime: 5
-  - listObjPattern: []
+  - listObjPattern:
+    - {fileID: 186018, guid: 41d758ebf47cc7f41bf458c8c580b385, type: 2}
     waitTime: 15
-  - listObjPattern: []
+  - listObjPattern:
+    - {fileID: 176110, guid: 949004d9316955c4f9bc6139bd2f7044, type: 2}
     waitTime: 15
-  - listObjPattern: []
+  - listObjPattern:
+    - {fileID: 112122, guid: 0b9cce6cb2d876e40b376f70e4a9165b, type: 2}
     waitTime: 15
-  - listObjPattern: []
+  - listObjPattern:
+    - {fileID: 189440, guid: f476619185a2de04ab1c8b62487e6a59, type: 2}
     waitTime: 15
-  - listObjPattern: []
+  - listObjPattern:
+    - {fileID: 179590, guid: 62f1396b75c1e8740a48c5e3ae1d4b20, type: 2}
     waitTime: 15
-  - listObjPattern: []
+  - listObjPattern:
+    - {fileID: 138196, guid: 1f34df9137602b149821e3b2f4888a6b, type: 2}
     waitTime: 15
-  - listObjPattern: []
+  - listObjPattern:
+    - {fileID: 116824, guid: 0b9d92d4533b30f4cb11426c851f24c9, type: 2}
     waitTime: 15
-  - listObjPattern: []
+  - listObjPattern:
+    - {fileID: 174464, guid: e07f7ca1134693e4caa03d73a2f21e5d, type: 2}
     waitTime: 15
-  listPattern2: []
+  listPattern2:
+  - listObjPattern:
+    - {fileID: 177268, guid: 92368a8d2c5a9aa428a44ccf3ed2e2bb, type: 2}
+    - {fileID: 186018, guid: 41d758ebf47cc7f41bf458c8c580b385, type: 2}
+    waitTime: 15
+  - listObjPattern:
+    - {fileID: 189440, guid: f476619185a2de04ab1c8b62487e6a59, type: 2}
+    - {fileID: 176110, guid: 949004d9316955c4f9bc6139bd2f7044, type: 2}
+    waitTime: 15
+  - listObjPattern:
+    - {fileID: 177268, guid: 92368a8d2c5a9aa428a44ccf3ed2e2bb, type: 2}
+    - {fileID: 112122, guid: 0b9cce6cb2d876e40b376f70e4a9165b, type: 2}
+    waitTime: 15
+  - listObjPattern:
+    - {fileID: 186018, guid: 41d758ebf47cc7f41bf458c8c580b385, type: 2}
+    - {fileID: 176110, guid: 949004d9316955c4f9bc6139bd2f7044, type: 2}
+    waitTime: 15
+  - listObjPattern:
+    - {fileID: 189440, guid: f476619185a2de04ab1c8b62487e6a59, type: 2}
+    waitTime: 15
+  - listObjPattern:
+    - {fileID: 177268, guid: 92368a8d2c5a9aa428a44ccf3ed2e2bb, type: 2}
+    - {fileID: 176110, guid: 949004d9316955c4f9bc6139bd2f7044, type: 2}
+    waitTime: 15
+  - listObjPattern:
+    - {fileID: 186018, guid: 41d758ebf47cc7f41bf458c8c580b385, type: 2}
+    - {fileID: 179590, guid: 62f1396b75c1e8740a48c5e3ae1d4b20, type: 2}
+    waitTime: 15
+  - listObjPattern:
+    - {fileID: 112122, guid: 0b9cce6cb2d876e40b376f70e4a9165b, type: 2}
+    - {fileID: 186018, guid: 41d758ebf47cc7f41bf458c8c580b385, type: 2}
+    waitTime: 15
+  - listObjPattern:
+    - {fileID: 138196, guid: 1f34df9137602b149821e3b2f4888a6b, type: 2}
+    - {fileID: 186018, guid: 41d758ebf47cc7f41bf458c8c580b385, type: 2}
+    waitTime: 15
+  - listObjPattern:
+    - {fileID: 177268, guid: 92368a8d2c5a9aa428a44ccf3ed2e2bb, type: 2}
+    - {fileID: 174464, guid: e07f7ca1134693e4caa03d73a2f21e5d, type: 2}
+    waitTime: 15
 --- !u!114 &11466618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1866,18 +1912,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba68c908353d02140aa8c346e0ef0de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  col: {fileID: 6568532}
+  colWeapon: {fileID: 0}
   Dir: {x: 0, y: 0, z: 0}
   LookDistan: 0
   effect: {fileID: 100004, guid: a89abc0d2591545288f4c041059ae633, type: 2}
   random: 0
-  MonsterMaxHP: 70
-  MonsterCurrentHP: 70
-  DropItem: {fileID: 0}
+  MonsterMaxHP: 500
+  MonsterCurrentHP: 500
   KillExp: 99
   AttackPower: 9
   AttackColltime: 0.3
   isChase: 0
+  bullet: {fileID: 167838, guid: 1fbb4a0d900aa7441b85fea9190ade7a, type: 2}
+  fps: 10
+  attackRange: 30
+  Far: 0
 --- !u!136 &13638412
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -2523,7 +2572,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.00001
+  m_Height: 0.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

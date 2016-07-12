@@ -3,20 +3,18 @@ using System.Collections;
 
 public class WeaponSetactive : MonoBehaviour
 {
-    public GameObject player;
+    MonsterManager monster;
 
     // Use this for initialization
     void Start()
     {
-
+        monster = transform.root.GetComponent<MonsterManager>();
     }
-
-
     void OnTriggerEnter(Collider col)
     {
         if (col.transform.CompareTag("Player")) // 플레이어 타격시
         {
-            transform.root.GetComponent<MonsterManager>().HitforPlayer(col.transform.root.GetComponent<Player>());
+            col.gameObject.GetComponent<Player>().HitToPlayer(monster.AttackPower);            
         }
     }
 }
